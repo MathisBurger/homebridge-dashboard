@@ -8,8 +8,14 @@
       "name": {
         "title": "Name",
         "type": "string",
-        "required": true,
+        "required": false,
         "default": "Example Dynamic Platform"
+      },
+      "port": {
+        "title": "Port",
+        "type": "integer",
+        "required": true,
+        "default": 18081
       }
     }
   }
