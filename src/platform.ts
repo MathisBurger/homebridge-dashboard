@@ -5,6 +5,7 @@ import {
   IndependentPlatformPlugin,
 } from 'homebridge';
 import WebServer from "./server/server";
+import {HapClient} from "@oznu/hap-client";
 
 
 export class HomebridgeDashboardPlugin implements IndependentPlatformPlugin {
@@ -17,11 +18,16 @@ export class HomebridgeDashboardPlugin implements IndependentPlatformPlugin {
     public readonly api: API,
   ) {
     this.log.debug('Finished initializing platform:', this.config.name);
-    this.createHttpService();
+    const client = new HapClient({
+      pin: '933-27-300',
+      logger: this.log,
+      config: {},
+    });
+    this.createHttpService(client);
   }
 
-  createHttpService() {
-    this.requestServer = new WebServer(this.log, this.config);
+  createHttpService(client: HapClient) {
+    this.requestServer = new WebServer(this.log, this.config, client);
     this.requestServer.listen();
   }
 }
