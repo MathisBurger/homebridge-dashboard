@@ -3,6 +3,7 @@ import {Logger, PlatformConfig} from 'homebridge';
 import {HapClient} from '@oznu/hap-client';
 import {Server} from "http";
 import {Server as SocketServer} from "socket.io";
+import cors from "cors";
 
 class WebServer {
 
@@ -16,6 +17,9 @@ class WebServer {
         public readonly client: HapClient,
   ) {
     this.server = express();
+    this.server.use(cors({
+      origin: '*',
+    }));
     this.server.use((req, res, next) => {
       res.locals.hapClient = client;
       next();
@@ -24,10 +28,15 @@ class WebServer {
     this.server.get('/*', (req: Request, res: Response) => res.sendStatus(200));
     this.httpServer = new Server(this.server);
 
-    this.socket = new SocketServer(this.httpServer);
-    this.socket.on('connection', (socket) => {
-      socket.send('Hello');
+    this.socket = new SocketServer(this.httpServer, {
+      cors: {
+        origin: '*',
+      },
     });
+    setInterval(async () => {
+      const data = await this.client.getAllServices();
+      this.socket.emit('state-changed', {data});
+    }, 1500);
   }
 
   public listen(): void {
