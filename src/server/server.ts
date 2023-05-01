@@ -1,13 +1,14 @@
 import express, {Express, Request, Response} from 'express';
-import {API, Logger, PlatformConfig} from 'homebridge';
+import {Logger, PlatformConfig} from 'homebridge';
 import {HapClient} from '@oznu/hap-client';
-
-type ExtendedRequest = Request & {hapClient: HapClient};
-
+import {Server} from "http";
+import {Server as SocketServer} from "socket.io";
 
 class WebServer {
 
   private server: Express;
+  private httpServer: Server;
+  private readonly socket: SocketServer;
 
   constructor(
         private readonly log: Logger,
@@ -21,10 +22,16 @@ class WebServer {
     });
     this.server.get('/initDevices', WebServer.getInitialAccessories);
     this.server.get('/*', (req: Request, res: Response) => res.sendStatus(200));
+    this.httpServer = new Server(this.server);
+
+    this.socket = new SocketServer(this.httpServer);
+    this.socket.on('connection', (socket) => {
+      socket.send('Hello');
+    });
   }
 
   public listen(): void {
-    this.server.listen(this.config.port, () => {
+    this.httpServer.listen(this.config.port, () => {
       this.log.info(`Started homebridge dashboard on port ${this.config.port}`);
     });
   }

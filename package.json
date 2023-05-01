@@ -41,6 +41,7 @@
   "dependencies": {
     "@oznu/hap-client": "^1.9.0",
     "express": "^4.18.2",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "socket.io": "^4.6.1"
   }
 }
