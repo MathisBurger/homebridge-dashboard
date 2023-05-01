@@ -3,42 +3,25 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import {io} from 'socket.io-client';
+import ServiceDisplay from './ServiceDisplay';
+import {ServiceType} from '@oznu/hap-client';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [services, setServices] = useState<ServiceType[]>([]);
 
   useEffect(() => {
-      const socket = io('ws://localhost:18081');
-      socket.on('connect', () => {
-          console.log('connected');
-      });
-      socket.on('state-changed', (data) => {
-          console.log(data);
-      });
+    const socket = io('ws://localhost:18081');
+    socket.on('connect', () => {
+      console.log('connected');
+    });
+    socket.on('state-changed', (data: {data: ServiceType[]}) => {
+      setServices(data['data']);
+    });
   }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ServiceDisplay services={services} setServices={setServices} />
     </>
   );
 }
