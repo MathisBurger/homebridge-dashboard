@@ -1,3 +1,6 @@
+/**
+ * Error that is thrown on bad request.
+ */
 class BadRequestException extends Error {
   constructor(msg: string) {
     super(msg);

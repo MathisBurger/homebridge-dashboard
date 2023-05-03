@@ -7,6 +7,9 @@ import cors from 'cors';
 import BadRequestException from './error/BadRequestException';
 import bodyParser from 'body-parser';
 
+/**
+ * WebServer that serves all important data.
+ */
 class WebServer {
 
   private readonly server: Express;
@@ -18,35 +21,58 @@ class WebServer {
         private readonly config: PlatformConfig,
         public readonly client: HapClient,
   ) {
+
     this.server = express();
+
+    // Use cors
     this.server.use(cors({
       origin: '*',
     }));
+    // Use JSON bodies only
     this.server.use(bodyParser.json());
+
+    // Provide client to request obj
     this.server.use((req, res, next) => {
       res.locals.hapClient = client;
       next();
     });
+
+    // Endpoint for updating a service
     this.server.post('/updateService', WebServer.updateService);
+
+    // Endpoint that serves all frontend files
     this.server.get('/**', (req: Request, res: Response) => res.sendStatus(200));
+
     this.httpServer = new Server(this.server);
     this.socket = new SocketServer(this.httpServer, {
       cors: {
         origin: '*',
       },
     });
+
+    // Send state of all services every 2.5s
     setInterval(async () => {
       const data = (await this.client.getAllServices()).filter((s) => s.type !== 'ProtocolInformation');
       this.socket.emit('state-changed', {data});
     }, 2500);
   }
 
+  /**
+   * Listen to the http server
+   */
   public listen(): void {
     this.httpServer.listen(this.config.port, () => {
       this.log.info(`Started homebridge dashboard on port ${this.config.port}`);
     });
   }
 
+  /**
+   * Updates a specific service
+   *
+   * @param req Request object
+   * @param res Response object
+   * @private
+   */
   private static async updateService(req: Request, res: Response): Promise<void> {
     const client = res.locals.hapClient as HapClient;
     const all = await client.getAllServices();
