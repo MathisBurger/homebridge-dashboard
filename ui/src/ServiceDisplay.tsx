@@ -1,5 +1,5 @@
 import {CharacteristicType, ServiceType} from '@oznu/hap-client';
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {Card, CardContent, Grid} from '@mui/material';
 import {Outlet, QuestionMark} from '@mui/icons-material';
 
@@ -8,9 +8,18 @@ interface ServiceDisplayProps {
     setServices: Dispatch<SetStateAction<ServiceType>[]>;
 }
 
+interface UpdateData {
+  iid: number;
+  value: number|boolean|string|null;
+  aid: number;
+  characteristicType: string;
+}
+
 const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) => {
 
-  const updateService = async (iid: number, value: number|string|boolean|null, aid: number, characteristicType: string) => {
+  const [data, setData] = useState<UpdateData|null>(null);
+
+  const updateService = async ({iid, value, aid, characteristicType}: UpdateData) => {
     if (value === null) {
       return null;
     }
@@ -71,22 +80,28 @@ const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) 
     }
   };
 
+  useEffect(() => {
+    if (data !== null) {
+      updateService(data);
+    }
+  }, [data]);
+
   return (
     <Grid container direction="row" spacing={2}>
       {services.map((service: ServiceType) => (
         <Grid item xs={2}>
           <Card>
             <CardContent
-              style={{backgroundColor: getStatusColor(service.serviceCharacteristics ?? [])}}
+              style={{backgroundColor: getStatusColor([getWriteableCharacteristic(service)])}}
               onClick={
                 () => {
                   const characteristc = getWriteableCharacteristic(service);
-                  updateService(
-                    service.iid,
-                    resolveNextValue(characteristc),
-                    service.aid,
-                    characteristc?.type ?? '',
-                  );
+                  setData({
+                    iid: service.iid,
+                    aid: service.aid,
+                    value: resolveNextValue(characteristc),
+                    characteristicType: characteristc?.type ?? '',
+                  });
                 }
               }
             >
