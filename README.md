@@ -31,8 +31,16 @@ If you are installing your plugins through a cli just use
 npm i -g homebridge-dashboard
 ```
 
-# Configuration
+## Configuration
 
 | Parameter | description                         | format  | default |
 |-----------|-------------------------------------|---------|---------|
 | port      | The port that the web panel runs on | integer | 18081   |
+
+## Node versions
+
+The system is tested on following node versions:
+- 15.x
+- 16.x
+- 17.x
+- 18.x
