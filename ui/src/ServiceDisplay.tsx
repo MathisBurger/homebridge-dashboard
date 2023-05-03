@@ -5,10 +5,19 @@ import {Outlet, QuestionMark, Security, ToggleOn} from '@mui/icons-material';
 import SecuritySystemSelect from './SecuritySystemSelect';
 
 interface ServiceDisplayProps {
-    services: ServiceType[];
-    setServices: Dispatch<SetStateAction<ServiceType>[]>;
+  /**
+   * All services
+   */
+  services: ServiceType[];
+  /**
+   * Function to set all services
+   */
+  setServices: Dispatch<SetStateAction<ServiceType[]>>;
 }
 
+/**
+ * The data that is required for updates
+ */
 export interface UpdateData {
   iid: number;
   value: number|boolean|string|null;
@@ -16,6 +25,11 @@ export interface UpdateData {
   characteristicType: string;
 }
 
+/**
+ * Displays all services in a list
+ *
+ * @constructor
+ */
 const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) => {
 
   const [data, setData] = useState<UpdateData|null>(null);
@@ -110,13 +124,13 @@ const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) 
       }
     }
     return 'Off';
-  }
+  };
 
   const onCardClick = (service: ServiceType) => {
     const characteristc = getWriteableCharacteristic(service);
     if (characteristc?.type === 'SecuritySystemTargetState') {
       setSecurityState(
-          service.serviceCharacteristics.find((c) => c.type === 'SecuritySystemCurrentState')?.value as number ?? 0
+          service.serviceCharacteristics.find((c) => c.type === 'SecuritySystemCurrentState')?.value as number ?? 0,
       );
       setSecurityDialogOpen(true);
       setData({
@@ -145,33 +159,33 @@ const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) 
     <>
       <Grid container direction="row" spacing={2}>
         {services.map((service: ServiceType) => (
-            <Grid item xs={2}>
-              <Card>
-                <CardContent
-                    style={{backgroundColor: getStatusColor(service.serviceCharacteristics)}}
-                    onClick={
-                      () => onCardClick(service)
-                    }
-                >
-                  <Grid container direction="row" spacing={2}>
-                    <Grid item xs={12}>{handleServiceIcon(service.type)}</Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">{service.serviceName}</Typography>
-                    </Grid>
-                    <Grid item xs={12}>{getServiceState(service)}</Grid>
+          <Grid item xs={2}>
+            <Card>
+              <CardContent
+                style={{backgroundColor: getStatusColor(service.serviceCharacteristics)}}
+                onClick={
+                  () => onCardClick(service)
+                }
+              >
+                <Grid container direction="row" spacing={2}>
+                  <Grid item xs={12}>{handleServiceIcon(service.type)}</Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="h6">{service.serviceName}</Typography>
                   </Grid>
-                </CardContent>
-              </Card>
-            </Grid>
+                  <Grid item xs={12}>{getServiceState(service)}</Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
       </Grid>
       {securityDialogOpen && (
-          <SecuritySystemSelect
-              currentState={currentSecurityState}
-              updateData={setData}
-              onClose={() => setSecurityDialogOpen(false)}
-              data={data}
-          />
+        <SecuritySystemSelect
+          currentState={currentSecurityState}
+          updateData={setData}
+          onClose={() => setSecurityDialogOpen(false)}
+          data={data}
+        />
       )}
     </>
   );
