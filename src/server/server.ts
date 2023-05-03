@@ -83,7 +83,7 @@ class WebServer {
     if (!service.getCharacteristic || service.serviceCharacteristics.length === 0) {
       throw new BadRequestException('No characteristics on service');
     }
-    const characteristic = service.getCharacteristic(service.serviceCharacteristics[0].type);
+    const characteristic = service.getCharacteristic(req.body.characteristicType);
 
     if (!characteristic || !characteristic.canWrite) {
       const types = service.serviceCharacteristics.filter(x => x.canWrite).map(x => `'${x.type}'`).join(', ');
