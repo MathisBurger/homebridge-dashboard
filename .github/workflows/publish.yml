@@ -26,7 +26,7 @@ jobs:
 
       - name: Build the project
         uses: JS-DevTools/npm-publish@v2
-          with:
-            token: ${{ secrets.NPM_TOKEN }}
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
 
 
