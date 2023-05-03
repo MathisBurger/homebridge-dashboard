@@ -21,10 +21,11 @@
     "lint": "eslint src/**.ts --max-warnings=0",
     "watch": "npm run build && npm link && nodemon",
     "build": "rimraf ./dist && tsc",
-    "prepublishOnly": "npm run lint && npm run build",
+    "prepublishOnly": "npm run build:all",
     "web:dev": "vite ui",
     "web:build": "vite build ui",
-    "build:all": "npm run build && npm run web:build && mv ui/dist dist/static"
+    "build:all": "npm run build && npm run web:build && mv ui/dist dist/static",
+    "prebuildpackage": "npm run build:all"
   },
   "keywords": [
     "homebridge-plugin"
