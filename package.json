@@ -23,7 +23,8 @@
     "build": "rimraf ./dist && tsc",
     "prepublishOnly": "npm run lint && npm run build",
     "web:dev": "vite ui",
-    "web:build": "vite build ui"
+    "web:build": "vite build ui",
+    "build:all": "npm run build && npm run web:build && mv ui/dist dist/static"
   },
   "keywords": [
     "homebridge-plugin"

@@ -31,6 +31,8 @@ class WebServer {
     // Use JSON bodies only
     this.server.use(bodyParser.json());
 
+    this.server.use(express.static('static'));
+
     // Provide client to request obj
     this.server.use((req, res, next) => {
       res.locals.hapClient = client;
