@@ -66,5 +66,8 @@
   },
   "resolutions": {
     "@types/react": "^18.0.28"
+  },
+  "overrides": {
+    "react@^16":  "^18.0.2"
   }
 }
