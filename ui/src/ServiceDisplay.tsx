@@ -32,7 +32,7 @@ const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) 
 
   return (
     <>
-      <Grid container direction="row" spacing={2}>
+      <Grid container direction="row" spacing={2} width="100%" minWidth="100%">
         {services.map((service: ServiceType) => (
           <Grid item xs={2}>
             <ServiceCard service={service} setServices={setServices} />
