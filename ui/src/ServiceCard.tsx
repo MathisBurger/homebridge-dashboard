@@ -5,7 +5,7 @@ import {Outlet, QuestionMark, Security, Settings, ToggleOn} from '@mui/icons-mat
 import {getProtocol, getUrl} from './url';
 import {UpdateData} from './ServiceDisplay';
 import SecuritySystemSelect from './SecuritySystemSelect';
-import {useSnackbar} from "mui-wrapped-components";
+import {useSnackbar} from 'mui-wrapped-components';
 
 interface ServiceCardProps {
     service: ServiceType;
@@ -138,9 +138,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({service, setServices}) => {
   };
 
   const copyUniqueId = () => {
-    navigator.clipboard.writeText(service.uniqueId ?? '');
+    const textField = document.createElement('textarea');
+    textField.innerText = service.uniqueId ?? '';
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand('copy');
+    textField.remove();
     setAnchorEl(null);
-    openSnackbar("success", "Successfully copied to clipboard", 1000);
+    openSnackbar('success', 'Successfully copied to clipboard', 1000);
   };
 
   return (
@@ -175,17 +180,17 @@ const ServiceCard: React.FC<ServiceCardProps> = ({service, setServices}) => {
         />
       )}
       {menuOpen && (
-          <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={menuOpen}
-              onClose={() => setAnchorEl(null)}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button',
-              }}
-          >
-            <MenuItem onClick={copyUniqueId}>Copy uniqueId</MenuItem>
-          </Menu>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={menuOpen}
+          onClose={() => setAnchorEl(null)}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={copyUniqueId}>Copy uniqueId</MenuItem>
+        </Menu>
       )}
     </>
   );
