@@ -137,13 +137,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({service, setServices}) => {
     });
   };
 
-  const copyUniqueId = () => {
-    const textField = document.createElement('textarea');
-    textField.innerText = service.uniqueId ?? '';
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand('copy');
-    textField.remove();
+  const copyUniqueId = async () => {
+    if ('clipboard' in navigator) {
+      await navigator.clipboard.writeText(service.uniqueId ?? '');
+    } else {
+      document.execCommand('copy', true, service.uniqueId ?? '');
+    }
     setAnchorEl(null);
     openSnackbar('success', 'Successfully copied to clipboard', 1000);
   };
