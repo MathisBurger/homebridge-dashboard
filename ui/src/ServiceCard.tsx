@@ -6,6 +6,7 @@ import {getProtocol, getUrl} from './url';
 import {UpdateData} from './ServiceDisplay';
 import SecuritySystemSelect from './SecuritySystemSelect';
 import {useSnackbar} from 'mui-wrapped-components';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 interface ServiceCardProps {
     service: ServiceType;
@@ -137,13 +138,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({service, setServices}) => {
     });
   };
 
-  const copyUniqueId = async () => {
-    console.log(service.uniqueId);
-    await navigator.clipboard.writeText(service.uniqueId ?? 'invalid-id');
-    setAnchorEl(null);
-    openSnackbar('success', 'Successfully copied to clipboard', 1000);
-  };
-
   return (
     <>
       <Card style={{width: '100%'}}>
@@ -185,7 +179,13 @@ const ServiceCard: React.FC<ServiceCardProps> = ({service, setServices}) => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={copyUniqueId}>Copy uniqueId</MenuItem>
+          <MenuItem onClick={() => setAnchorEl(null)}>
+            <CopyToClipboard
+              options={{message: 'Whoa!'}}
+              text={service.uniqueId ?? 'invalid-id'}>
+              <span>Copy uniqueId</span>
+            </CopyToClipboard>
+          </MenuItem>
         </Menu>
       )}
     </>
