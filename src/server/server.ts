@@ -20,7 +20,11 @@ class WebServer {
         private readonly log: Logger,
         private readonly config: PlatformConfig,
         public readonly client: HapClient,
+        private readonly staticDir: string
   ) {
+
+
+    this.log.info(this.staticDir);
 
     this.server = express();
 
@@ -31,7 +35,7 @@ class WebServer {
     // Use JSON bodies only
     this.server.use(bodyParser.json());
 
-    this.server.use(express.static('static'));
+    this.server.use(express.static(this.staticDir));
 
     // Provide client to request obj
     this.server.use((req, res, next) => {

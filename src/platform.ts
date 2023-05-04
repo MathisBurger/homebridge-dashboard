@@ -41,7 +41,7 @@ export class HomebridgeDashboardPlugin implements IndependentPlatformPlugin {
    * @param client The HAP client for home-bridge
    */
   createHttpService(client: HapClient) {
-    this.requestServer = new WebServer(this.log, this.config, client);
+    this.requestServer = new WebServer(this.log, this.config, client, __dirname + '/static');
     this.requestServer.listen();
   }
 }
