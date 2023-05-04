@@ -138,6 +138,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({service, setServices}) => {
     });
   };
 
+  const copyMessage = () => {
+    setAnchorEl(null);
+    openSnackbar('success', 'Value copied to clipboard', 1000);
+  };
+
   return (
     <>
       <Card style={{width: '100%'}}>
@@ -179,7 +184,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({service, setServices}) => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={() => setAnchorEl(null)}>
+          <MenuItem onClick={copyMessage}>
             <CopyToClipboard
               options={{message: 'Whoa!'}}
               text={service.uniqueId ?? 'invalid-id'}>
