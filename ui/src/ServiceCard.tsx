@@ -145,7 +145,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({service, setServices}) => {
 
   return (
     <>
-      <Card>
+      <Card style={{width: '100%'}}>
         <CardContent
           style={{backgroundColor: getStatusColor(service.serviceCharacteristics)}}
           onClick={

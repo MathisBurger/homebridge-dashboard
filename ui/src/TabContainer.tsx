@@ -50,7 +50,7 @@ const TabContainer: React.FC<TabContainerProps> = ({services, setServices}) => {
   );
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', position: 'absolute', top: '10%', left: '50%', transform: 'translate(-40%, -10%)' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={currentTab} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Default" {...a11yProps(0)} />
