@@ -3,7 +3,7 @@ import './App.css';
 import {io} from 'socket.io-client';
 import ServiceDisplay from './ServiceDisplay';
 import {ServiceType} from '@oznu/hap-client';
-import {getUrl} from "./url";
+import {getUrl} from './url';
 
 function App() {
   const [services, setServices] = useState<ServiceType[]>([]);

@@ -5,11 +5,42 @@
   "schema": {
     "type": "object",
     "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string",
+        "required": true,
+        "default": "Dashboard"
+      },
       "port": {
         "title": "Port",
         "type": "integer",
         "required": true,
         "default": 18081
+      },
+      "tabs": {
+        "title": "Tabs",
+        "type": "array",
+        "required": false,
+        "items": {
+          "title": "Tab",
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "Name",
+              "type": "string",
+              "required": true
+            },
+            "devices": {
+              "title": "Devices",
+              "type": "array",
+              "required": true,
+              "items": {
+                "title": "UniqueID",
+                "type": "string"
+              }
+            }
+          }
+        }
       }
     }
   }

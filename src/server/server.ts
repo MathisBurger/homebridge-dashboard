@@ -40,11 +40,13 @@ class WebServer {
     // Provide client to request obj
     this.server.use((req, res, next) => {
       res.locals.hapClient = client;
+      res.locals.config = config;
       next();
     });
 
     // Endpoint for updating a service
     this.server.post('/updateService', WebServer.updateService);
+    this.server.get('/tabConfiguration', WebServer.getTabConfiguration);
 
     // Endpoint that serves all frontend files
     //this.server.get('/**', (req: Request, res: Response) => res.sendStatus(200));
@@ -150,6 +152,16 @@ class WebServer {
 
     const services = (await client.getAllServices()).filter((s) => s.type !== 'ProtocolInformation');
     res.send({services});
+  }
+
+  private static getTabConfiguration(req: Request, res: Response): void
+  {
+    const config: PlatformConfig = res.locals.config;
+    if (!config.tabs) {
+      res.send({tabs: []});
+      return;
+    }
+    res.send({tabs: config.tabs});
   }
 
 
