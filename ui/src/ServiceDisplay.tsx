@@ -3,6 +3,7 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {Card, CardContent, Grid, Typography} from '@mui/material';
 import {Outlet, QuestionMark, Security, ToggleOn} from '@mui/icons-material';
 import SecuritySystemSelect from './SecuritySystemSelect';
+import {getProtocol, getUrl} from "./url";
 
 interface ServiceDisplayProps {
   /**
@@ -40,7 +41,7 @@ const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) 
     if (value === null) {
       return null;
     }
-    const response = await fetch('http://localhost:18081/updateService', {
+    const response = await fetch(`${getProtocol()}//${getUrl()}/updateService`, {
       method: 'POST',
       body: JSON.stringify({
         iid,

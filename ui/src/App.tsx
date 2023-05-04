@@ -3,6 +3,7 @@ import './App.css';
 import {io} from 'socket.io-client';
 import ServiceDisplay from './ServiceDisplay';
 import {ServiceType} from '@oznu/hap-client';
+import {getUrl} from "./url";
 
 function App() {
   const [services, setServices] = useState<ServiceType[]>([]);
@@ -11,7 +12,7 @@ function App() {
    * Connects to socket and updates all changes.
    */
   useEffect(() => {
-    const socket = io('ws://localhost:18081');
+    const socket = io(`ws://${getUrl()}`);
     socket.on('state-changed', (data: {data: ServiceType[]}) => {
       setServices(data['data']);
     });
