@@ -43,7 +43,7 @@ class WebServer {
     this.server.post('/updateService', WebServer.updateService);
 
     // Endpoint that serves all frontend files
-    this.server.get('/**', (req: Request, res: Response) => res.sendStatus(200));
+    //this.server.get('/**', (req: Request, res: Response) => res.sendStatus(200));
 
     this.httpServer = new Server(this.server);
     this.socket = new SocketServer(this.httpServer, {
