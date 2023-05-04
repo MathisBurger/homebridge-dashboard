@@ -17,6 +17,11 @@
         "required": true,
         "default": 18081
       },
+      "pin": {
+        "title": "Pin for HomeKit",
+        "type": "string",
+        "required": true,
+      },
       "tabs": {
         "title": "Tabs",
         "type": "array",

@@ -26,7 +26,7 @@ export class HomebridgeDashboardPlugin implements IndependentPlatformPlugin {
 
     // Creates a client for reading data from home-bridge
     const client = new HapClient({
-      pin: '933-27-300',
+      pin: this.config.pin ?? '',
       logger: this.log,
       config: {},
     });

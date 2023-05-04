@@ -33,9 +33,12 @@ npm i -g homebridge-dashboard
 
 ## Configuration
 
-| Parameter | description                         | format  | default |
-|-----------|-------------------------------------|---------|---------|
-| port      | The port that the web panel runs on | integer | 18081   |
+| Parameter | description                                                                                             | format  | default |
+|-----------|---------------------------------------------------------------------------------------------------------|---------|---------|
+| port      | The port that the web panel runs on. Using a port lower than 10000 could cause the system to not start. | integer | 18081   |
+| pin       | The pin of the Homekit bridge                                                                           | string  | `null`  |
+| tabs      | Tabs are shown in the frontend. They are used to sort all devices.                                      | array   | []      |
+
 
 ## Node versions
 
