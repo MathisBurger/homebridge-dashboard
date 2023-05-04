@@ -4,6 +4,7 @@ import {io} from 'socket.io-client';
 import ServiceDisplay from './ServiceDisplay';
 import {ServiceType} from '@oznu/hap-client';
 import {getUrl} from './url';
+import {SnackbarProvider} from "mui-wrapped-components";
 
 function App() {
   const [services, setServices] = useState<ServiceType[]>([]);
@@ -19,9 +20,9 @@ function App() {
   }, []);
 
   return (
-    <>
+    <SnackbarProvider>
       <ServiceDisplay services={services} setServices={setServices} />
-    </>
+    </SnackbarProvider>
   );
 }
 
