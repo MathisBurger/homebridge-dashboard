@@ -20,7 +20,7 @@
       "pin": {
         "title": "Pin for HomeKit",
         "type": "string",
-        "required": true,
+        "required": true
       },
       "tabs": {
         "title": "Tabs",
