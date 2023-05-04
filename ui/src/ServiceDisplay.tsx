@@ -20,9 +20,8 @@ interface ServiceDisplayProps {
  * The data that is required for updates
  */
 export interface UpdateData {
-  iid: number;
+  uniqueId: ServiceType['uniqueId'];
   value: number|boolean|string|null;
-  aid: number;
   characteristicType: string;
 }
 
@@ -37,16 +36,15 @@ const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) 
   const [currentSecurityState, setSecurityState] = useState<number>(0);
   const [securityDialogOpen, setSecurityDialogOpen] = useState<boolean>(false);
 
-  const updateService = async ({iid, value, aid, characteristicType}: UpdateData) => {
+  const updateService = async ({value, uniqueId, characteristicType}: UpdateData) => {
     if (value === null) {
       return null;
     }
     const response = await fetch(`${getProtocol()}//${getUrl()}/updateService`, {
       method: 'POST',
       body: JSON.stringify({
-        iid,
         value,
-        aid,
+        uniqueId,
         characteristicType,
       }),
       headers: {
@@ -136,15 +134,13 @@ const ServiceDisplay: React.FC<ServiceDisplayProps> = ({services, setServices}) 
       setSecurityDialogOpen(true);
       setData({
         value: null,
-        aid: service.aid,
-        iid: service.iid,
+        uniqueId: service.uniqueId,
         characteristicType: 'SecuritySystemTargetState',
       });
       return;
     }
     setData({
-      iid: service.iid,
-      aid: service.aid,
+      uniqueId: service.uniqueId,
       value: resolveNextValue(characteristc),
       characteristicType: characteristc?.type ?? '',
     });

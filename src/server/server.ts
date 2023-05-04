@@ -20,7 +20,7 @@ class WebServer {
         private readonly log: Logger,
         private readonly config: PlatformConfig,
         public readonly client: HapClient,
-        private readonly staticDir: string
+        private readonly staticDir: string,
   ) {
 
 
@@ -82,7 +82,7 @@ class WebServer {
   private static async updateService(req: Request, res: Response): Promise<void> {
     const client = res.locals.hapClient as HapClient;
     const all = await client.getAllServices();
-    const service: ServiceType|undefined = all.find((s) => s.iid === req.body.iid && s.aid === req.body.aid);
+    const service: ServiceType|undefined = all.find((s) => s.uniqueId === req.body.uniqueId);
     if (!service) {
       throw new BadRequestException('Service not found');
     }
