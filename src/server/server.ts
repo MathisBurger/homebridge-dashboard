@@ -47,6 +47,7 @@ class WebServer {
     // Endpoint for updating a service
     this.server.post('/updateService', WebServer.updateService);
     this.server.get('/tabConfiguration', WebServer.getTabConfiguration);
+    this.server.get('/cameraConfiguration', WebServer.getCameraConfiguration);
 
     // Endpoint that serves all frontend files
     //this.server.get('/**', (req: Request, res: Response) => res.sendStatus(200));
@@ -162,6 +163,16 @@ class WebServer {
       return;
     }
     res.send({tabs: config.tabs});
+  }
+
+  private static getCameraConfiguration(req: Request, res: Response): void
+  {
+    const config: PlatformConfig = res.locals.config;
+    if (!config.cameras) {
+      res.send({cameras: []});
+      return;
+    }
+    res.send({cameras: config.cameras});
   }
 
 

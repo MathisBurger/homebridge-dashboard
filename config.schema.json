@@ -46,6 +46,42 @@
             }
           }
         }
+      },
+      "cameras": {
+        "title": "Cameras",
+        "type": "array",
+        "required": false,
+        "items": {
+          "title": "Camera",
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "required": true,
+              "title": "Username"
+            },
+            "password": {
+              "type": "string",
+              "required": true,
+              "title": "Password"
+            },
+            "host": {
+              "type": "string",
+              "required": true,
+              "title": "Host"
+            },
+            "port": {
+              "type": "string",
+              "required": true,
+              "title": "Port"
+            },
+            "stream-path": {
+              "type": "string",
+              "required": false,
+              "title": "STREAM path"
+            }
+          }
+        }
       }
     }
   }
