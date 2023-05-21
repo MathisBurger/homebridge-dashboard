@@ -4,7 +4,7 @@ import {useMemo} from 'react';
 import {FrontendRoute, frontendRoutes} from '../Webroutes';
 import {Link} from 'react-router-dom';
 
-const allowedRoutes: RouteType[] = [RouteType.servicePage];
+const allowedRoutes: RouteType[] = [RouteType.servicePage, RouteType.cameraPage];
 
 const StartPage = () => {
 

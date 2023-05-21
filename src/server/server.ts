@@ -9,6 +9,7 @@ import bodyParser from 'body-parser';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import {routes} from '../../ui/src/routes';
+import * as child_process from 'child_process';
 
 /**
  * WebServer that serves all important data.
@@ -51,6 +52,7 @@ class WebServer {
     this.server.post('/updateService', WebServer.updateService);
     this.server.get('/tabConfiguration', WebServer.getTabConfiguration);
     this.server.get('/cameraConfiguration', WebServer.getCameraConfiguration);
+    this.server.get('/camera/stream', WebServer.streamCamera);
 
     for (const route of Object.values(routes)) {
       this.server.get(route.path, WebServer.redirectToWebIndex);
@@ -182,6 +184,24 @@ class WebServer {
   private static redirectToWebIndex(req: Request, res: Response): void
   {
     res.redirect('/index.html');
+  }
+
+  private static streamCamera(req: Request, res: Response): void
+  {
+    const streamUrl = req.query.streamUrl;
+    res.header('content-type', 'video/webm');
+
+    const cmd = `ffmpeg -i ${streamUrl} -c:v copy -c:a copy -bsf:v h264_mp4toannexb -maxrate 500k -f matroska -`.split(' ');
+
+    const child = child_process.spawn(cmd[0], cmd.splice(1), {
+      stdio: ['ignore', 'pipe', process.stderr]
+    });
+
+    child.stdio[1].pipe(res);
+
+    res.on('close', () => {
+      child.kill();
+    });
   }
 
 

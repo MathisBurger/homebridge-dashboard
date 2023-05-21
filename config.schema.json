@@ -75,7 +75,7 @@
               "required": true,
               "title": "Port"
             },
-            "stream-path": {
+            "streamPath": {
               "type": "string",
               "required": false,
               "title": "STREAM path"

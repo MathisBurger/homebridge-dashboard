@@ -1,8 +1,9 @@
 import {Route, routes, RouteType} from './routes';
 import ServicePage from './pages/ServicePage';
-import {Lightbulb} from '@mui/icons-material';
+import {Camera, Lightbulb} from '@mui/icons-material';
 import {RouteObject} from 'react-router-dom';
 import StartPage from './pages/StartPage';
+import CameraPage from './pages/CameraPage';
 
 export interface FrontendRoute extends Route {
     element: JSX.Element;
@@ -22,6 +23,11 @@ export const frontendRoutes: FrontendRoutes = {
     element: <ServicePage />,
     icon: <Lightbulb />,
   },
+  cameraPage: {
+    ...routes.cameraPage!,
+    element: <CameraPage />,
+    icon: <Camera />
+  }
 };
 
 export const getRouterConfig = (): RouteObject[] => {

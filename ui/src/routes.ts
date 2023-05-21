@@ -7,7 +7,8 @@ export interface Route {
 
 export enum RouteType {
     startPage='startPage',
-    servicePage='servicePage'
+    servicePage='servicePage',
+    cameraPage='cameraPage'
 }
 
 export type AppRoutes = Partial<Record<keyof typeof RouteType, Route>>;
@@ -20,5 +21,9 @@ export const routes: AppRoutes = {
     servicePage: {
         path: '/accessories',
         name: 'Accessories'
+    },
+    cameraPage: {
+        path: '/cameras',
+        name: 'Cameras'
     }
 };
