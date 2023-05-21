@@ -23,6 +23,8 @@ Just give it a try and try it out yourself.
 
 ## Installation
 
+NOTE: You will need to have `ffmpeg` installed if you want to use the camera streaming feature.
+
 If you are using [config-ui-x](https://github.com/homebridge/homebridge-config-ui-x) you can just install
 this extension through the admin panel.
 If you are installing your plugins through a cli just use
