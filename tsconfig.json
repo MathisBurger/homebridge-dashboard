@@ -19,7 +19,8 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/"
+    "src/",
+    "ui/src/routes.tsx"
   ],
   "exclude": [
     "**/*.spec.ts",

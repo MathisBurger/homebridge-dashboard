@@ -1,27 +1,16 @@
-import {useEffect, useState} from 'react';
 import './App.css';
-import {io} from 'socket.io-client';
-import {ServiceType} from '@oznu/hap-client';
-import {getUrl} from './url';
 import {SnackbarProvider} from 'mui-wrapped-components';
-import TabContainer from './TabContainer';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {getRouterConfig} from "./routes";
+
 
 function App() {
-  const [services, setServices] = useState<ServiceType[]>([]);
 
-  /**
-   * Connects to socket and updates all changes.
-   */
-  useEffect(() => {
-    const socket = io(`ws://${getUrl()}`);
-    socket.on('state-changed', (data: {data: ServiceType[]}) => {
-      setServices(data['data']);
-    });
-  }, []);
+  const router = createBrowserRouter(getRouterConfig());
 
   return (
     <SnackbarProvider>
-      <TabContainer services={services} setServices={setServices} />
+      <RouterProvider router={router} />
     </SnackbarProvider>
   );
 }
