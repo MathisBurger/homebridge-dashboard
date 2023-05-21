@@ -1,7 +1,7 @@
 import './App.css';
 import {SnackbarProvider} from 'mui-wrapped-components';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {getRouterConfig} from "./routes";
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {getRouterConfig} from './Webroutes';
 
 
 function App() {

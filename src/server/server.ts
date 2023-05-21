@@ -6,6 +6,9 @@ import {Server as SocketServer} from 'socket.io';
 import cors from 'cors';
 import BadRequestException from './error/BadRequestException';
 import bodyParser from 'body-parser';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import {routes} from '../../ui/src/routes';
 
 /**
  * WebServer that serves all important data.
@@ -49,8 +52,9 @@ class WebServer {
     this.server.get('/tabConfiguration', WebServer.getTabConfiguration);
     this.server.get('/cameraConfiguration', WebServer.getCameraConfiguration);
 
-    // Endpoint that serves all frontend files
-    //this.server.get('/**', (req: Request, res: Response) => res.sendStatus(200));
+    for (const route of Object.values(routes)) {
+      this.server.get(route.path, WebServer.redirectToWebIndex);
+    }
 
     this.httpServer = new Server(this.server);
     this.socket = new SocketServer(this.httpServer, {
@@ -173,6 +177,11 @@ class WebServer {
       return;
     }
     res.send({cameras: config.cameras});
+  }
+
+  private static redirectToWebIndex(req: Request, res: Response): void
+  {
+    res.redirect('/index.html');
   }
 
 

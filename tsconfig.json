@@ -20,7 +20,7 @@
   },
   "include": [
     "src/",
-    "ui/src/routes.tsx"
+    "ui/src/routes.ts"
   ],
   "exclude": [
     "**/*.spec.ts",
