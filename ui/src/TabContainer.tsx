@@ -44,7 +44,11 @@ const TabContainer: React.FC<TabContainerProps> = ({services, setServices}) => {
       }
       const index = currentTab-1;
       const tab = tabs[index];
-      return services.filter((s) => tab.devices.indexOf(s.uniqueId ?? '') > -1);
+      return services
+          .filter((s) => tab.devices.indexOf(s.uniqueId ?? '') > -1)
+          .filter((s) => s.type !== 'CameraRTPStreamManagement')
+          .filter((s) => s.type !== 'Microphone')
+          .filter((s) => s.type !== 'MotionSensor');
     },
     [currentTab, services, tabs],
   );
