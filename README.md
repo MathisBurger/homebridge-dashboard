@@ -17,6 +17,7 @@ This plugin has been tested with following devices:
 
 - Tapo P100
 - [Security System Plugin](https://www.npmjs.com/package/homebridge-securitysystem)
+- [TP Link Camera Plugin](https://github.com/kopiro/homebridge-tapo-camera)
 
 But even if the amount of tested devices is not that big, many devices should be supported in theory.
 Just give it a try and try it out yourself.
